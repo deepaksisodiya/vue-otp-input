@@ -1,7 +1,7 @@
 {
   "name": "vue-otp-input",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "main": "./dist/vue-otp-input.common.js",
   "scripts": {
     "serve": "vue-cli-service serve",
