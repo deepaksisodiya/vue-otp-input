@@ -1,9 +1,9 @@
 <template>
   <div class="otp-container">
-    <span v-for="index in 6" :key="index">
+    <span v-for="index in numberOfInput" :key="index">
       <input
         type="number"
-        v-model="otps[index]"
+        v-model="otps[index + 1]"
         class="otp-number-input"
         :ref="'otpDigit' + index"
         @keypress="onKeyPress"
@@ -13,7 +13,7 @@
         :class="{ error: isError }"
         :isDisabled="isDisabled"
         @paste="onPaste"
-        @input="onInput"
+        @input="onInput($event, 'otpDigit' + (index + 1))"
       />
     </span>
   </div>
@@ -39,37 +39,30 @@ export default {
     onChangeOTP: {
       type: Function,
       required: true
+    },
+    numberOfInput: {
+      type: Number,
+      required: false,
+      default: 4
     }
   },
 
   data() {
     return {
-      otpDigit1: null,
-      otpDigit2: null,
-      otpDigit3: null,
-      otpDigit4: null,
-      otpDigit5: null,
-      otpDigit6: null,
       otps: []
     };
   },
 
   computed: {
-    code() {
-      const code =
-        "" +
-        this.otpDigit1 +
-        this.otpDigit2 +
-        this.otpDigit3 +
-        this.otpDigit4 +
-        this.otpDigit5 +
-        this.otpDigit6;
-      return parseInt(code, 10);
+    otp() {
+      const otp = this.otps.join("");
+      if (otp) return parseInt(otp, 10);
+      return null;
     }
   },
 
   updated() {
-    if (this.shouldResetOTP) this.shouldResetOTPInput();
+    if (this.shouldResetOTP) this.resetOTPInput();
   },
 
   methods: {
@@ -85,11 +78,13 @@ export default {
       this.$refs[ref][0].focus();
     },
 
-    onInput(event) {
+    onInput(event, ref) {
+      this.onChangeOTP(this.otp);
+
       if (event.inputType === "deleteContentBackward") return false;
 
-      this.onChangeOTP(this.code);
-      this.moveToNextInput(event);
+      this.moveToNextInput(ref);
+      event.preventDefault();
     },
 
     onPaste(event) {
@@ -104,27 +99,17 @@ export default {
       // set the length to 6
       if (arrayOfNumbers.length > 6) arrayOfNumbers.slice(0, 6);
 
-      // looping and setting codes
-      arrayOfNumbers.forEach((number, index) => {
-        const key = `code${index + 1}`;
-        this[key] = null;
-        this[key] = number;
-      });
+      this.opts = arrayOfNumbers;
 
       // focus the last input element according to length
-      const focusKey = `code${arrayOfNumbers.length}`;
-      this.$refs[focusKey].focus();
+      const focusKey = `otpDigit${arrayOfNumbers.length}`;
+      this.$refs[focusKey][0].focus();
 
       event.preventDefault();
     },
 
-    shouldResetOTPInput() {
-      this.otpDigit1 = null;
-      this.otpDigit2 = null;
-      this.otpDigit3 = null;
-      this.otpDigit4 = null;
-      this.otpDigit5 = null;
-      this.otpDigit6 = null;
+    resetOTPInput() {
+      this.otps = [];
     }
   }
 };

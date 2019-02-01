@@ -5,6 +5,7 @@
       :isError="isError"
       :onChangeOTP="onChangeOTP"
       :shouldResetOTP="shouldResetOTP"
+      :numberOfInput="6"
     />
   </div>
 </template>
