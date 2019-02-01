@@ -95,7 +95,7 @@ export default {
       // set the length to 6
       if (arrayOfNumbers.length > 6) arrayOfNumbers.slice(0, 6);
 
-      this.opts = arrayOfNumbers;
+      this.otps = arrayOfNumbers;
 
       // focus the last input element according to length
       const ref = `otpDigit${arrayOfNumbers.length}`;
