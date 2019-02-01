@@ -28,5 +28,9 @@
     "public/*",
     "*.json",
     "*.js"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepaksisodiya/vue-otp-input.git"
+  }
 }
