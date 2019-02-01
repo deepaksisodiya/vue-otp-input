@@ -3,13 +3,13 @@
     <span v-for="index in numberOfInput" :key="index">
       <input
         type="number"
-        v-model="otps[index + 1]"
+        v-model="otps[index - 1]"
         class="otp-number-input"
         :ref="'otpDigit' + index"
         @keypress="onKeyPress"
-        @keyup.right="moveToNextInput('otpDigit' + (index + 1))"
-        @keyup.left="moveToPreviousInput('otpDigit' + (index - 1))"
-        @keyup.delete="moveToPreviousInput('otpDigit' + (index - 1))"
+        @keyup.right="focusInputByRef('otpDigit' + (index + 1))"
+        @keyup.left="focusInputByRef('otpDigit' + (index - 1))"
+        @keyup.delete="focusInputByRef('otpDigit' + (index - 1))"
         :class="{ error: isError }"
         :isDisabled="isDisabled"
         @paste="onPaste"
@@ -70,11 +70,7 @@ export default {
       if (event.target.value.length === 1) return event.preventDefault();
     },
 
-    moveToNextInput(ref) {
-      this.$refs[ref][0].focus();
-    },
-
-    moveToPreviousInput(ref) {
+    focusInputByRef(ref) {
       this.$refs[ref][0].focus();
     },
 
@@ -83,7 +79,7 @@ export default {
 
       if (event.inputType === "deleteContentBackward") return false;
 
-      this.moveToNextInput(ref);
+      this.focusInputByRef(ref);
       event.preventDefault();
     },
 
@@ -102,8 +98,8 @@ export default {
       this.opts = arrayOfNumbers;
 
       // focus the last input element according to length
-      const focusKey = `otpDigit${arrayOfNumbers.length}`;
-      this.$refs[focusKey][0].focus();
+      const ref = `otpDigit${arrayOfNumbers.length}`;
+      this.focusInputByRef(ref);
 
       event.preventDefault();
     },
