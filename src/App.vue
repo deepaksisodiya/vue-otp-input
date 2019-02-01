@@ -1,17 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <OTPInput
+      :isDisabled="isisDisabled"
+      :isError="isError"
+      :onChangeOTP="onChangeOTP"
+      :shouldResetOTP="shouldResetOTP"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import OTPInput from "./components/OTPInput.vue";
 
 export default {
   name: "app",
+
   components: {
-    HelloWorld
+    OTPInput
+  },
+
+  data() {
+    return {
+      otp: null,
+      isisDisabled: false,
+      isError: false,
+      shouldResetOTP: false
+    };
+  },
+
+  methods: {
+    onChangeOTP(otp) {
+      this.otp = otp;
+    }
   }
 };
 </script>
