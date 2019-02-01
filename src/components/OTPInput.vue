@@ -1,86 +1,21 @@
 <template>
   <div class="otp-container">
-    <input
-      type="number"
-      v-model="otpDigit1"
-      class="otp-number-input"
-      ref="otpDigit1"
-      @keypress="onKeyPress"
-      @keyup.right="moveToNextInput"
-      :class="{ error: isError }"
-      :isDisabled="isDisabled"
-      @paste="onPaste"
-      @input="onInput"
-    />
-    <input
-      type="number"
-      v-model="otpDigit2"
-      class="otp-number-input"
-      ref="otpDigit2"
-      @keypress="onKeyPress"
-      @keyup.right="moveToNextInput"
-      @keyup.left="moveToPreviousInput"
-      @keyup.delete="moveToPreviousInput"
-      :isDisabled="isDisabled"
-      :class="{ error: isError }"
-      @paste="onPaste"
-      @input="onInput"
-    />
-    <input
-      type="number"
-      v-model="otpDigit3"
-      class="otp-number-input"
-      ref="otpDigit3"
-      @keypress="onKeyPress"
-      @keyup.right="moveToNextInput"
-      @keyup.left="moveToPreviousInput"
-      @keyup.delete="moveToPreviousInput"
-      :isDisabled="isDisabled"
-      :class="{ error: isError }"
-      @paste="onPaste"
-      @input="onInput"
-    />
-    <input
-      type="number"
-      v-model="otpDigit4"
-      class="otp-number-input"
-      ref="otpDigit4"
-      @keypress="onKeyPress"
-      @keyup.right="moveToNextInput"
-      @keyup.left="moveToPreviousInput"
-      @keyup.delete="moveToPreviousInput"
-      :isDisabled="isDisabled"
-      :class="{ error: isError }"
-      @paste="onPaste"
-      @input="onInput"
-    />
-    <input
-      type="number"
-      v-model="otpDigit5"
-      class="otp-number-input"
-      ref="otpDigit5"
-      @keypress="onKeyPress"
-      @keyup.right="moveToNextInput"
-      @keyup.left="moveToPreviousInput"
-      @keyup.delete="moveToPreviousInput"
-      :isDisabled="isDisabled"
-      :class="{ error: isError }"
-      @paste="onPaste"
-      @input="onInput"
-    />
-    <input
-      type="number"
-      v-model="otpDigit6"
-      class="otp-number-input"
-      ref="otpDigit6"
-      @keypress="onKeyPress"
-      @keyup.left="moveToPreviousInput"
-      @keyup.delete="moveToPreviousInput"
-      :isDisabled="isDisabled"
-      :class="{ error: isError }"
-      @paste="onPaste"
-      @input="onInput"
-    />
+    <span v-for="index in 6" :key="index">
+      <input
+        type="number"
+        v-model="otps[index]"
+        class="otp-number-input"
+        :ref="'otpDigit' + index"
+        @keypress="onKeyPress"
+        @keyup.right="moveToNextInput('otpDigit' + (index + 1))"
+        @keyup.left="moveToPreviousInput('otpDigit' + (index - 1))"
+        @keyup.delete="moveToPreviousInput('otpDigit' + (index - 1))"
+        :class="{ error: isError }"
+        :isDisabled="isDisabled"
+        @paste="onPaste"
+        @input="onInput"
+      />
+    </span>
   </div>
 </template>
 
@@ -114,7 +49,8 @@ export default {
       otpDigit3: null,
       otpDigit4: null,
       otpDigit5: null,
-      otpDigit6: null
+      otpDigit6: null,
+      otps: []
     };
   },
 
@@ -141,18 +77,12 @@ export default {
       if (event.target.value.length === 1) return event.preventDefault();
     },
 
-    moveToNextInput(event) {
-      if (!event.target.nextElementSibling) return;
-
-      event.target.nextElementSibling.focus();
-      event.preventDefault();
+    moveToNextInput(ref) {
+      this.$refs[ref][0].focus();
     },
 
-    moveToPreviousInput(event) {
-      if (!event.target.previousElementSibling) return;
-
-      event.target.previousElementSibling.focus();
-      event.preventDefault();
+    moveToPreviousInput(ref) {
+      this.$refs[ref][0].focus();
     },
 
     onInput(event) {
