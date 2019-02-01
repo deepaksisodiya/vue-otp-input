@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <OTPInput
-      :isDisabled="isisDisabled"
+      :isDisabled="isDisabled"
       :isError="isError"
       :onChangeOTP="onChangeOTP"
       :shouldResetOTP="shouldResetOTP"
@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       otp: null,
-      isisDisabled: false,
+      isDisabled: false,
       isError: false,
       shouldResetOTP: false
     };
