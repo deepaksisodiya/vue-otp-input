@@ -11,7 +11,7 @@
         @keyup.left="focusInputByRef('otpDigit' + (index - 1))"
         @keyup.delete="focusInputByRef('otpDigit' + (index - 1))"
         :class="{ error: isError }"
-        :isDisabled="isDisabled"
+        :disabled="isDisabled"
         @paste="onPaste"
         @input="onInput($event, 'otpDigit' + (index + 1))"
       />
