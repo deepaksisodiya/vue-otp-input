@@ -53,6 +53,6 @@ export default {
 </script>
 ```
 
-### Things remaingin
+### Things remaining
 
 1. Add CSS classes for disabled and error
