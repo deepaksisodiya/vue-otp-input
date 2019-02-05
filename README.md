@@ -26,7 +26,7 @@ https://codesandbox.io/s/x72or1nyvw
 </template>
 
 <script>
-import OTPInput from "./components/OTPInput.vue";
+import OTPInput from "vue-otp-input";
 
 export default {
   name: "app",
