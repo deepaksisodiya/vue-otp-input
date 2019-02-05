@@ -4,13 +4,12 @@
       <input
         type="number"
         v-model="otps[index - 1]"
-        class="otp-number-input"
         :ref="'otpDigit' + index"
         @keypress="onKeyPress"
         @keyup.right="focusInputByRef('otpDigit' + (index + 1))"
         @keyup.left="focusInputByRef('otpDigit' + (index - 1))"
         @keyup.delete="focusInputByRef('otpDigit' + (index - 1))"
-        :class="{ error: isError }"
+        :style="inputStyle"
         :disabled="isDisabled"
         @paste="onPaste"
         @input="onInput($event, 'otpDigit' + (index + 1))"
@@ -26,15 +25,18 @@ export default {
   props: {
     isDisabled: {
       type: Boolean,
-      required: true
+      required: false,
+      default: false
     },
     isError: {
       type: Boolean,
-      required: true
+      required: false,
+      default: false
     },
     shouldResetOTP: {
       type: Boolean,
-      required: true
+      required: false,
+      default: false
     },
     onChangeOTP: {
       type: Function,
@@ -44,6 +46,31 @@ export default {
       type: Number,
       required: false,
       default: 4
+    },
+    otpInputStyle: {
+      type: Object,
+      required: false,
+      default: function() {
+        return {
+          width: "40px",
+          height: "40px",
+          "margin-right": "10px",
+          "text-align": "center",
+          "font-size": "20px",
+          appearance: "none",
+          "-webkit-appearance": "none",
+          "border-radius": "2px"
+        };
+      }
+    },
+    error: {
+      type: Object,
+      required: false,
+      default: function() {
+        return {
+          "border-color": "red"
+        };
+      }
     }
   },
 
@@ -58,6 +85,18 @@ export default {
       const otp = this.otps.join("");
       if (otp) return parseInt(otp, 10);
       return null;
+    },
+    inputStyle() {
+      if (this.isError) {
+        return {
+          ...this.otpInputStyle,
+          ...this.error
+        };
+      }
+
+      return {
+        ...this.otpInputStyle
+      };
     }
   },
 
@@ -71,6 +110,7 @@ export default {
     },
 
     focusInputByRef(ref) {
+      if (!this.$refs[ref]) return;
       this.$refs[ref][0].focus();
     },
 

@@ -53,6 +53,14 @@ export default {
 </script>
 ```
 
-### Things remaining
+### Props
 
-1. Add CSS classes for disabled and error
+| Prop name  | type | default value | Required Props
+| --------   | -------- | --------- | ---------- |
+| isDisabled  | Boolean  | false | false
+| IsError  | Boolean  | false | false
+| onChangeOTP  | Function | | true
+| shouldResetOTP | Boolean | false | false
+| numberOfInput | Number | 4 | false
+| otpInputStyle | Object | | false
+| error| Object | | false
