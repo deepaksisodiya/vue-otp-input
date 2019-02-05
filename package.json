@@ -1,6 +1,6 @@
 {
   "name": "vue-otp-input",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "main": "./dist/vue-otp-input.common.js",
   "scripts": {
