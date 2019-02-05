@@ -1,21 +1,58 @@
 # vue-otp-input
 
-## Project setup
+## How to Install
+
 ```
-npm install
+npm install vue-otp-input --save
 ```
 
-### Compiles and hot-reloads for development
+### codesandbox example
+
+https://codesandbox.io/s/x72or1nyvw
+
+### How to use it
+
 ```
-npm run serve
+<template>
+  <div>
+    <OTPInput
+      :isDisabled="isDisabled"
+      :isError="isError"
+      :onChangeOTP="onChangeOTP"
+      :shouldResetOTP="shouldResetOTP"
+      :numberOfInput="6"
+    />
+  </div>
+</template>
+
+<script>
+import OTPInput from "./components/OTPInput.vue";
+
+export default {
+  name: "app",
+
+  components: {
+    OTPInput
+  },
+
+  data() {
+    return {
+      otp: null,
+      isDisabled: false,
+      isError: false,
+      shouldResetOTP: false
+    };
+  },
+
+  methods: {
+    onChangeOTP(otp) {
+      this.otp = otp;
+    }
+  }
+};
+</script>
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Things remaingin
 
-### Lints and fixes files
-```
-npm run lint
-```
+1. Add CSS classes for disabled and error
