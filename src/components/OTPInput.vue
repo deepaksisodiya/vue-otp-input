@@ -38,10 +38,6 @@ export default {
       required: false,
       default: false
     },
-    onChangeOTP: {
-      type: Function,
-      required: true
-    },
     numberOfInput: {
       type: Number,
       required: false,
@@ -71,6 +67,10 @@ export default {
           "border-color": "red"
         };
       }
+    },
+    onChangeOTP: {
+      type: Function,
+      required: true
     }
   },
 
@@ -78,6 +78,14 @@ export default {
     return {
       otps: []
     };
+  },
+
+  watch: {
+    shouldResetOTP: function(newProp, oldProp) {
+      if (newProp === !oldProp) {
+        this.resetOTPInput();
+      }
+    }
   },
 
   computed: {
@@ -98,10 +106,6 @@ export default {
         ...this.otpInputStyle
       };
     }
-  },
-
-  updated() {
-    if (this.shouldResetOTP) this.resetOTPInput();
   },
 
   methods: {
