@@ -55,6 +55,12 @@ export default {
 
 ### Props
 
+If you want to reset the OTP input then set the value of shouldResetOTP props as follows
+
+```
+this.shouldResetOTP = !this.shouldResetOTP;
+```
+
 | Prop name  | type | default value | Required Props
 | --------   | -------- | --------- | ---------- |
 | isDisabled  | Boolean  | false | false
